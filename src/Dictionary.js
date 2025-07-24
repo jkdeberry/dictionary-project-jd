@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Results from "./Results";
 import "./Dictionary.css";
 
 export default function Dictionary () {
-  let [keyword, setKeyword] = useState("")
-  let [audioUrl, setAudioUrl] = useState(null);
+  const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState({}); // Shecodes API result
+  const [audioUrl, setAudioUrl] = useState(null); //Free Dictionary API audio
 
   function handleKeywordChange(event) {
     setKeyword(event.target.value);
   }
   
   function handleSheCodesResponse(response) {
-    console.log(response.data[0]);
+    setResults(response.data);
   }
 
   function handleFreeDictionaryResponse(response) {
-    console.log("Free Dictionary API", response.data);
-    const phonetics = response.data[0].phonetics;
-    const audioObj = phonetics.find((p) => p.audio);
-    if (audioObj && audioObj.audio){
-      setAudioUrl(audioObj.audio);
+    const audio = response.data[0]?.phonetics?.find(p => p.audio);
+    if (audio && audio.audio){
+      setAudioUrl(audio.audio);
     } else {
-      console.warn("No audio available for this word");
       setAudioUrl(null);
     }
   }
@@ -29,29 +28,29 @@ export default function Dictionary () {
   function search(event) {
     event.preventDefault();
 
-    //documentation: https://api.shecodes.io/dictionary
-    const apiKey = "4e2df5aotaa983694533f2b4440ef095"
-    const apiUrl = `https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${apiKey}`;
+    //SheCodes API for word data
+    let apiKey = "4e2df5aotaa983694533f2b4440ef095"
+    let apiUrl = `https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${apiKey}`;
     axios.get(apiUrl).then(handleSheCodesResponse);
 
-    const freeDictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${keyword}`;
+    //Free Dictionary ApI for audio only
+    let freeDictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${keyword}`;
     axios.get(freeDictionaryUrl).then(handleFreeDictionaryResponse);
   }
- 
-    
+   
   return (
     <div className="Dictionary">
-      <form onSubmit={search}>
-        <input type="search" onChange={handleKeywordChange} />
-      </form>
-
-      {audioUrl && (
-        <div className="Audio">
-          <audio controls src={audioUrl}>
-            Your browser does not support audio element.
-          </audio>
-        </div>
-      )}
+      <section>
+        <form onSubmit={search}>
+          <input 
+          type="search" 
+          placeholder="Enter a word..."
+          onChange={handleKeywordChange}
+          />
+        </form>
+     </section>
+    
+    <Results results={results} audioUrl={audioUrl} />
     </div>
   )
 }
