@@ -1,0 +1,77 @@
+.ResultsCard {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ResultsCard h2 {
+  font-size: 2rem;
+  margin-bottom:  20px;
+}
+
+audio {
+  margin-bottom: 20px;
+}
+
+.Results {
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.phonetic {
+  font-style: italic;
+  color: #666;
+}
+
+.definitions {
+  margin-top: 10px;
+}
+
+.meaning {
+  margin-bottom: 15px;
+}
+
+.definition {
+  font-weight: bold;
+}
+
+.example {
+  color: #444;
+  margin-top: 5px;
+}
+
+.synonyms, .antonyms {
+  font-size: 0.9em;
+  color: #777;
+}
+
+.photos {
+  margin-top: 20px;
+}
+
+.photo {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.photo-grid img {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

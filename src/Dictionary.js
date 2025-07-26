@@ -3,54 +3,80 @@ import axios from "axios";
 import Results from "./Results";
 import "./Dictionary.css";
 
-export default function Dictionary () {
+export default function Dictionary() {
   const [keyword, setKeyword] = useState("");
-  const [results, setResults] = useState({}); // Shecodes API result
-  const [audioUrl, setAudioUrl] = useState(null); //Free Dictionary API audio
+  const [results, setResults] = useState({});
+  const [audioUrl, setAudioUrl] = useState(null);
+  const [photos, setPhotos] = useState(null);
 
-  function handleKeywordChange(event) {
-    setKeyword(event.target.value);
-  }
-  
   function handleSheCodesResponse(response) {
     setResults(response.data);
   }
 
-  function handleFreeDictionaryResponse(response) {
+  function handleSheCodesDictionaryResponse(response) {
     const audio = response.data[0]?.phonetics?.find(p => p.audio);
-    if (audio && audio.audio){
-      setAudioUrl(audio.audio);
-    } else {
-      setAudioUrl(null);
-    }
+    setAudioUrl(audio?.audio || null);
+  }
+
+  function handlePexelsResponse(response) {
+    setPhotos(response.data.photos);
+  }
+
+  function handleKeywordChange(event) {
+    setKeyword(event.target.value);
   }
 
   function search(event) {
-    event.preventDefault();
+  event.preventDefault();
+  const form = event.target;
+  const word = form.elements.keyword.value; 
+  
 
-    //SheCodes API for word data
-    let apiKey = "4e2df5aotaa983694533f2b4440ef095"
-    let apiUrl = `https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${apiKey}`;
-    axios.get(apiUrl).then(handleSheCodesResponse);
+  const apiKey = "4e2df5aotaa983694533f2b4440ef095";
+  const apiUrl = `https://api.shecodes.io/dictionary/v1/define?word=${word}&key=${apiKey}`;
+  axios.get(apiUrl).then(handleSheCodesResponse);
 
-    //Free Dictionary ApI for audio only
-    let freeDictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${keyword}`;
-    axios.get(freeDictionaryUrl).then(handleFreeDictionaryResponse);
-  }
-   
+  const SheCodesDictionaryUrl = `https://api.shecodes.io/dictionary/v1/define?word=${word}&key=${apiKey}`;
+  axios.get(SheCodesDictionaryUrl).then(handleSheCodesDictionaryResponse);
+
+  const pexelsApiKey = "uOGK1BU3SckmYVPjjU8iySbEYl56jXWTQilIKNSOZieuKdRB6ka4GOA3";
+  const pexelsApiUrl = `https://api.pexels.com/v1/search?query=${word}&per_page=6`;
+
+  axios
+    .get(pexelsApiUrl, {
+      headers: {
+        Authorization: pexelsApiKey
+      }
+    })
+    .then(handlePexelsResponse)
+    .catch(error => {
+      console.error("Pexels API error:", error.message);
+    });
+}
+
   return (
     <div className="Dictionary">
+      <h1>DeBerry's Dictionary</h1>
       <section>
         <form onSubmit={search}>
-          <input 
-          type="search" 
-          placeholder="Enter a word..."
-          onChange={handleKeywordChange}
+          <input
+            type="search"
+            name="keyword"
+            placeholder="Enter a word..."
+            onChange={handleKeywordChange}
+            value={keyword}
           />
+        <button type="submit">Search</button>
         </form>
-     </section>
-    
-    <Results results={results} audioUrl={audioUrl} />
+        <pre>{JSON.stringify(results, null, 2)}</pre>
+      </section>
+
+      <Results
+        results={results}
+        audioUrl={audioUrl}
+        photos={photos}
+        keyword={keyword}
+      />
     </div>
-  )
+  );
 }

@@ -13,7 +13,9 @@ export default function App() {
         <Dictionary />
       </main>
       <footer className="text-center">
-        <small>Coded by Jeanine DeBerry, open-sourced on Github and hosted on Netlify</small>
+      Coded by Jeanine DeBerry <a href="https://github.com/jkdeberry"></a>, 
+      open-sourced on <a href="https://github.com/dictionary-project-jd">GitHub</a>
+      Github and hosted on <a href="https://dictionary-project-jd.netlify.app/"></a>Netlify
       </footer>
     </div>
   );

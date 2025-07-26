@@ -1,13 +1,25 @@
 import React from "react";
+import Synonyms from "./Synonyms";
 
 export default function Meaning({ meaning }) {
   return (
-    <div className="Meaning">
+    <div className="MeaningCard">
       <h3>{meaning.partOfSpeech}</h3>
-      <p><strong>Definition:</strong> {meaning.definition}</p>
+
+      {meaning.definition && (
+      <p>
+        <strong>Definition:</strong> {meaning.definition}
+      </p>
+      )}
+
+      {meaning.example && (
+        <p>
+          <em>Example:</em> "{meaning.example}"
+        </p>
+      )}
 
       {meaning.synonyms && meaning.synonyms.length > 0 && (
-        <p><strong>Synonyms:</strong> {meaning.synonyms.join(", ")}</p>
+        <Synonyms synonyms={meaning.synonyms} />
       )}
     </div>
   );

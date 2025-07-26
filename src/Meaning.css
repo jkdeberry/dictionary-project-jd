@@ -1,0 +1,29 @@
+.MeaningCard {
+  background: #fdfdfd;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.MeaningCard h3 {
+  margin-top: 0;
+  color: #444;
+  font-size: 1.2rem;
+}
+
+.MeaningCard p {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.definition-block {
+  margin-bottom: 1rem;
+}
+
+.example {
+  color: #555;
+  font-style: italic;
+  margin-left: 1rem;
+}

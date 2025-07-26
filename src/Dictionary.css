@@ -1,11 +1,92 @@
 .Dictionary {
-  background: ;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.Results {
+.Dictionary form input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.Dictionary h2 {
+  margin-top: 20px;
+  color: #222;
+}
+
+@media (max-width: 700px) {
+  .Dictionary {
+    margin: 20px 10px;
+    padding: 16px;
+  }
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+/* Results */
+.Results h2 {
+  font-size: 28px;
   margin-bottom: 10px;
+  color: #34495e;
+  text-transform: capitalize;
 }
 
-.Audio {
+audio {
+  display: block;
+  margin: 20px 0;
+  width: 100%;
+}
+
+
+strong {
+  color: #2980b9;
+}
+
+/* Synonyms */
+.Synonyms {
   margin-top: 10px;
+}
+
+.Synonyms ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.Synonyms li {
+  background-color: #ecf0f1;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 14px;
+  color: #aaa;
 }
